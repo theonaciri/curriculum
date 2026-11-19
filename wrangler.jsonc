@@ -1,0 +1,15 @@
+// Cloudflare Workers static assets: the site in ./public is served from Cloudflare's edge.
+// No server code runs. Deploy with: bunx wrangler deploy
+{
+  "name": "theonaciri",
+  "compatibility_date": "2026-11-09",
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "theonaciri.fr", "custom_domain": true },
+    { "pattern": "www.theonaciri.fr", "custom_domain": true }
+  ]
+}
