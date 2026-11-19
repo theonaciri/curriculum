@@ -2,7 +2,7 @@
 
 # theonaciri
 
-Personal site of Théo Naciri — résumé and portfolio ("book"), in English and French — live at **https://theonaciri.fr**.
+Personal site of Théo Naciri — résumé and portfolio ("book"), in English, French and Spanish — live at **https://theonaciri.fr**.
 Plain static HTML/CSS/JS: no framework, no build step, no cookies, no trackers. Hosted on Cloudflare (Workers static assets).
 
 ## Structure
@@ -11,7 +11,8 @@ Plain static HTML/CSS/JS: no framework, no build step, no cookies, no trackers. 
 public/                       Everything that gets published
   index.html                  English page (also the default for every other language)
   fr/index.html               French page
-  404.html                    Bilingual "page not found"
+  es/index.html               Spanish page (links the English résumé PDF)
+  404.html                    Trilingual "page not found"
   assets/css/style.css        All styles (light + dark theme, animations, responsive)
   assets/js/main.js           Progressive enhancements (reveal on scroll, lightbox, counters…)
   assets/img/work/            Book screenshots, WebP, 800px + up to 1600px variants
@@ -26,10 +27,10 @@ assets/icon.svg               T3 Code project icon (not published)
 
 ## Language selection
 
-- `/` checks the browser languages (`navigator.languages`). If French comes before English, the visitor is sent to `/fr/` (the `#anchor` is kept).
-- Clicking **EN** / **FR** remembers the choice in `localStorage`, so a French speaker who picks English stays on English.
-- `/?lang=fr` or `/?lang=en` forces a language (handy for links).
-- `/fr/` opened directly is always respected — no redirect away from an explicit URL.
+- `/` checks the browser languages (`navigator.languages`). If French or Spanish comes before English, the visitor is sent to `/fr/` or `/es/` (the `#anchor` is kept).
+- Clicking **EN** / **FR** / **ES** remembers the choice in `localStorage`, so a French speaker who picks English stays on English.
+- `/?lang=fr`, `/?lang=es` or `/?lang=en` forces a language (handy for links).
+- `/fr/` and `/es/` opened directly are always respected — no redirect away from an explicit URL.
 - Search engines get both versions through `hreflang` tags and `sitemap.xml`.
 
 ## Preview locally
@@ -44,7 +45,7 @@ python3 -m http.server -d public     # or any static server → http://localhost
 `theonaciri.fr` is registered at Gandi with its DNS on Cloudflare, so there is no DNS record to create by hand.
 
 1. Once: `bunx wrangler login`
-2. Every release: `bunx wrangler deploy` — uploads `public/` and attaches `theonaciri.fr` and `www.theonaciri.fr` (Wrangler creates their DNS records; the Gandi MX records for e-mail are untouched).
+2. Every release: push to `main` (Cloudflare builds and deploys automatically), or run `bunx wrangler deploy` by hand — uploads `public/` and attaches `theonaciri.fr` and `www.theonaciri.fr` (Wrangler creates their DNS records; the Gandi MX records for e-mail are untouched).
 3. Once, in the Cloudflare dashboard for the zone:
    - **SSL/TLS → Edge Certificates → Always Use HTTPS**: on.
    - **Rules → Redirect Rules → template "Redirect from WWW to root"**, so `www.` lands on `https://theonaciri.fr/`.
@@ -54,7 +55,7 @@ To deploy on every push instead, connect the Git repository in **Workers & Pages
 
 ## Editing content
 
-The two pages are hand-written and mirror each other: when you change a project, a job or a skill, update both `public/index.html` and `public/fr/index.html` (and `<lastmod>` in `sitemap.xml`).
+The three pages are hand-written and mirror each other: when you change a project, a job or a skill, update `public/index.html`, `public/fr/index.html` and `public/es/index.html` (and `<lastmod>` in `sitemap.xml`).
 Each book project is an `<article class="project">`; each screenshot is a `<figure class="shot">`:
 
 - `shot--wide` spans the full gallery width, otherwise it takes half;

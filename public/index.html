@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
-      /* Send French-speaking visitors to /fr/ — unless they picked English themselves. */
+      /* Send French- and Spanish-speaking visitors to /fr/ or /es/ — unless they picked English themselves. */
       (function (d, l) {
         d.documentElement.className += ' js';
         var pref, q;
         try {
           q = new URLSearchParams(l.search).get('lang');
-          if (q === 'en' || q === 'fr') localStorage.setItem('lang', q);
+          if (q === 'en' || q === 'fr' || q === 'es') localStorage.setItem('lang', q);
           pref = q || localStorage.getItem('lang');
         } catch (e) {}
         if (pref === 'en') return;
@@ -20,9 +20,10 @@
         var best;
         for (var i = 0; i < langs.length && !best; i++) {
           var code = String(langs[i]).slice(0, 2).toLowerCase();
-          if (code === 'fr' || code === 'en') best = code;
+          if (code === 'fr' || code === 'en' || code === 'es') best = code;
         }
-        if (pref === 'fr' || best === 'fr') l.replace('fr/' + (l.protocol === 'file:' ? 'index.html' : '') + l.hash);
+        var target = pref === 'fr' || pref === 'es' ? pref : best;
+        if (target === 'fr' || target === 'es') l.replace(target + '/' + (l.protocol === 'file:' ? 'index.html' : '') + l.hash);
       })(document, location);
     </script>
     <title>Théo Naciri — Full-stack &amp; AI Engineer · Freelance</title>
@@ -31,6 +32,7 @@
     <link rel="canonical" href="https://theonaciri.fr/">
     <link rel="alternate" hreflang="en" href="https://theonaciri.fr/">
     <link rel="alternate" hreflang="fr" href="https://theonaciri.fr/fr/">
+    <link rel="alternate" hreflang="es" href="https://theonaciri.fr/es/">
     <link rel="alternate" hreflang="x-default" href="https://theonaciri.fr/">
 
     <meta property="og:type" content="profile">
@@ -44,6 +46,7 @@
     <meta property="og:image:alt" content="Théo Naciri — Full-stack &amp; AI Engineer">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="es_ES">
     <meta property="profile:first_name" content="Théo">
     <meta property="profile:last_name" content="Naciri">
     <meta name="twitter:card" content="summary_large_image">
@@ -131,6 +134,7 @@
           <div class="lang" role="group" aria-label="Language">
             <a href="./" lang="en" hreflang="en" aria-current="true" data-lang-switch="en">EN</a>
             <a href="fr/" lang="fr" hreflang="fr" data-lang-switch="fr">FR</a>
+            <a href="es/" lang="es" hreflang="es" data-lang-switch="es">ES</a>
           </div>
           <a class="btn btn--primary btn--sm" href="assets/cv/Theo-Naciri-Resume-EN.pdf" target="_blank" rel="noopener" type="application/pdf">
             Résumé <svg class="i i--down" aria-hidden="true"><use href="#i-download"/></svg>
@@ -301,7 +305,7 @@
             <p class="eyebrow"><b>02</b> Selected work</p>
             <h2 class="section-title" id="work-title">Twelve projects, <em>one</em> obsession: speed.</h2>
             <div>
-              <p class="section-lead">From my portfolio: products I built, optimized or led, from luxury e-commerce to theme parks, banking, public institutions and healthcare.</p>
+              <p class="section-lead">Twelve products I built, optimized or led between 2015 and 2026, for clients from Paris to Saudi Arabia, the Caribbean and Mexico: an AI-native security platform, luxury e-commerce, theme parks, banking and insurance, public institutions, industrial safety and healthcare.</p>
               <p class="hint">
                 <svg class="i" aria-hidden="true"><use href="#i-cursor"/></svg>
                 <span class="hint__hover">Hover a screenshot to scroll the page · click to enlarge</span>
@@ -1108,7 +1112,7 @@
       <div class="wrap site-footer__inner">
         <p>© <span data-year>2026</span> Théo Naciri</p>
         <p>Handcrafted static HTML — no cookies, no trackers.</p>
-        <p><a href="fr/" lang="fr" hreflang="fr" data-lang-switch="fr">Lire en français</a></p>
+        <p><a href="fr/" lang="fr" hreflang="fr" data-lang-switch="fr">Lire en français</a> · <a href="es/" lang="es" hreflang="es" data-lang-switch="es">Leer en español</a></p>
       </div>
     </footer>
 
